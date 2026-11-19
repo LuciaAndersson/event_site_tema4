@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formular | Eventnavn</title>
+  <link rel="stylesheet" href="./starter.css">
+  <link rel="stylesheet" href="./style.css">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+</head>
+
+<body class="form-body">
+  <header class="site-header">
+    <div class="header-content">
+      <a class="site-logo" href="./">
+        <img src="images/LOGGA.svg" alt="Creative knit expo logotyp" class="logo-img">
+      </a>
+      <nav class="site-nav">
+        <button popovertarget="menu" aria-label="Öppna meny">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+            stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <ul class="menu" id="menu" popover>
+          <li><a href="./">Homepage</a></li>
+          <li><a href="./svg.html">Explore the event</a></li>
+          <li><a href="./form.html" aria-current="page">Book ticket</a></li>
+          <li>
+            <button id="theme-toggle">Dark mode</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="form-main">
+    <header class="form-intro">
+      <h1 class="title-form">BOOK YOUR TICKET</h1>
+      <p class="form-subtitle">Fill out the form below to create your own personalized ticket to Creative Knit Expo!
+      </p>
+    </header>
+
+    <form action="./opsamling.html" method="get" class="ticket-form">
+
+      <!-- 1. Name -->
+      <div class="form-group">
+        <label for="name">Your name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your fullname..." required>
+      </div>
+
+      <!-- 2. Skill / Experience Level -->
+      <fieldset>
+        <legend>Your knitting experience level:</legend>
+
+        <label for="beginner">
+          <input type="radio" id="beginner" name="skill" value="beginner" checked>
+          Beginner
+        </label>
+
+        <label for="intermediate">
+          <input type="radio" id="intermediate" name="skill" value="intermediate">
+          Intermediate
+        </label>
+
+        <label for="experienced">
+          <input type="radio" id="experienced" name="skill" value="experienced">
+          Experienced knitter
+        </label>
+      </fieldset>
+
+      <!-- 3. Favorite Yarn -->
+      <div class="form-group">
+        <label for="favorite-yarn">Your favorite yarn:</label>
+        <input type="text" id="favorite-yarn" name="favorite_yarn" placeholder="E.g. Wool, Alpaca, Cotton...">
+      </div>
+
+      <!-- 4. Current Project -->
+      <div class="form-group">
+        <label for="project">Your current project:</label>
+        <textarea id="project" name="project" rows="3" placeholder="What are you knitting right now?"></textarea>
+      </div>
+
+      <!-- 5. Färgval -->
+      <fieldset class="color-picker-group">
+        <legend>Select a color that suits you:</legend>
+        <div class="color-options">
+
+          <label class="color-option black">
+            <input type="radio" name="color" value="black" checked>
+            <span class="swatch" title="Black"></span>
+          </label>
+
+          <label class="color-option blue">
+            <input type="radio" name="color" value="blue">
+            <span class="swatch" title="Blue"></span>
+          </label>
+
+          <label class="color-option orange">
+            <input type="radio" name="color" value="orange">
+            <span class="swatch" title="Orange"></span>
+          </label>
+
+          <label class="color-option green">
+            <input type="radio" name="color" value="green">
+            <span class="swatch" title="Green"></span>
+          </label>
+
+          <label class="color-option pink">
+            <input type="radio" name="color" value="pink">
+            <span class="swatch" title="Pink"></span>
+          </label>
+
+        </div>
+      </fieldset>
+
+      <!-- 6. Submit Button -->
+      <button type="submit">Book ticket</button>
+
+    </form>
+
+    <section class="how-it-works-section">
+      <details class="how-it-works-accordion">
+        <summary>
+          <h2>How It Works</h2>
+        </summary>
+        <ol class="steps-list">
+          <li><strong>Personalize your ticket</strong> – Fill out the form with your details to create your own unique
+            event
+            ticket.</li>
+          <li><strong>Receive your ticket</strong> – Once you have completed the form, your personal ticket will be
+            ready.
+          </li>
+          <li><strong>Download your ticket</strong> – Save your digital ticket to your device and bring it with you to
+            the
+            event.</li>
+          <li><strong>Check in at the entrance</strong> – When you arrive, simply give your name to our event staff.
+            Make
+            sure the name on your ticket matches the name you provide at the entrance.</li>
+          <li><strong>Get your printed ticket</strong> – Our staff will print your personalized ticket for you. Pin it
+            to
+            your outfit, step inside and enjoy the exhibition!</li>
+        </ol>
+      </details>
+
+      <p class="form-closing-text">
+        We can't wait to welcome you to Creative Knit Expo! Get ready to explore the colourful world of textile art,
+        creativity and craftsmanship. See you there!
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-event-name">
+        <p>CREATIVE KNIT EXPO</p>
+      </div>
+      <div class="footer-links">
+        <p class="About">About us</p>
+        <p class="About">Contact us</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./script.js"></script>
+</body>
+
+</html>

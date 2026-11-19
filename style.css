@@ -1,0 +1,1306 @@
+/* --------------------------------------------------------------------------
+   1. VIEW TRANSITIONS
+   -------------------------------------------------------------------------- */
+@view-transition {
+  navigation: auto;
+}
+
+#Layer_1 {
+  view-transition-name: yarn-animation;
+}
+
+/* --------------------------------------------------------------------------
+   2. FÄRGVARIABLER & DARK MODE (TEMAN)
+   -------------------------------------------------------------------------- */
+html {
+  color-scheme: light dark;
+
+  --color-page: light-dark(#ffffff, #121212);
+  --color-surface: light-dark(#ffffff, #1e1e1e);
+  --color-text: light-dark(#000000, #f0f0f0);
+  --color-muted: light-dark(#666666, #aaaaaa);
+  --color-border: light-dark(#dddddd, #333333);
+
+  --space-05: 0.5rem;
+  --space-1: 1rem;
+  --space-2: 2rem;
+  --space-3: 3rem;
+  --font-main: "Google Sans Flex", sans-serif;
+
+  background: var(--color-page);
+  color: var(--color-text);
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+   3. GLOBALT & LAYOUT
+   -------------------------------------------------------------------------- */
+body {
+  margin: 0;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: minmax(1rlh, 1fr) minmax(0, 75rem) minmax(1rlh, 1fr);
+  font-family: var(--font-main);
+  background-color: var(--color-page);
+  color: var(--color-text);
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+main {
+  display: grid;
+  grid-template-columns: inherit;
+  grid-column: 1 / -1;
+  align-content: start;
+}
+
+main > * {
+  grid-column: 2;
+  padding-block: var(--space-3);
+}
+
+/* --------------------------------------------------------------------------
+   4. HEADER, LOGGA & NAVIGATION
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  background: transparent;
+  border: none;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+  box-sizing: border-box;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: inherit;
+}
+
+.header-content {
+  grid-column: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+@media (min-width: 768px) {
+  .header-content {
+    grid-column: 1 / -1;
+    padding-inline: 2rem;
+  }
+}
+
+/* Identisk storlek och placering på loggan överallt */
+.logo-img {
+  height: 3.5rem !important;
+  width: auto !important;
+  display: block;
+}
+
+.site-logo {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.header-content nav,
+.site-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+/* Hamburgarknapp i mobilen */
+.site-nav > button:not(#theme-toggle) {
+  padding: 0.2rem 0.4rem;
+  background: transparent;
+  color: #ffffff;
+  font-size: 2.4rem;
+  cursor: pointer;
+  border: none;
+}
+
+.form-body .site-nav > button:not(#theme-toggle),
+.opsamling-body .site-nav > button:not(#theme-toggle),
+.svg-body .site-nav > button:not(#theme-toggle) {
+  color: var(--color-text) !important;
+}
+
+.site-nav > button:not(#theme-toggle) svg {
+  width: 3rem;
+  height: 2.4rem;
+  display: block;
+}
+
+@media (width > 600px) {
+  .site-nav > button:not(#theme-toggle) {
+    display: none;
+  }
+}
+
+/* Datorskärmsmeny */
+.menu {
+  margin: 0;
+  padding: var(--space-1);
+  list-style: none;
+}
+
+@media (width > 600px) {
+  .menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.3rem;
+    padding: 0;
+    border: none;
+    background: none;
+    position: static;
+  }
+}
+
+/* Menylänkar på Startsidan (vit text) */
+.menu a {
+  display: block;
+  padding: 0.4rem 0;
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 0.2rem;
+  transition: border-color 0.2s ease;
+}
+
+/* Understreck för aktiv och hovrad länk */
+.menu a[aria-current="page"],
+.menu a:hover {
+  border-bottom-color: currentColor !important;
+  text-decoration: none;
+}
+
+/* Textfärg för menylänkar på ljusa undersidor */
+.svg-body .menu a,
+.form-body .menu a,
+.opsamling-body .menu a {
+  color: var(--color-text);
+}
+
+/* Dark mode-knapp inuti menyn på Startsidan (Samma vita färg som övriga länkar) */
+#theme-toggle {
+  display: inline-block !important;
+  background: transparent;
+  border: none;
+  margin: 0;
+  padding: 0.4rem 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-transform: inherit;
+  color: #ffffff !important;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.svg-body #theme-toggle,
+.form-body #theme-toggle,
+.opsamling-body #theme-toggle {
+  color: var(--color-text) !important;
+}
+
+#theme-toggle:hover {
+  opacity: 0.7;
+}
+
+/* Mobil Popover-meny - Placerad högst upp till höger */
+[popover] {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.menu:popover-open {
+  position: fixed !important;
+  top: 4.5rem !important;
+  right: 1rem !important;
+  left: auto !important;
+  bottom: auto !important;
+  margin: 0 !important;
+  z-index: 1000;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  padding: 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.8rem;
+  min-width: 200px;
+}
+
+.menu:popover-open a {
+  color: var(--color-text) !important;
+  font-size: 1.1rem;
+}
+
+.menu:popover-open #theme-toggle {
+  color: var(--color-text) !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. HERO-SEKTION (STARTSIDAN)
+   -------------------------------------------------------------------------- */
+.hero {
+  grid-column: 1 / -1;
+  padding-block: 0;
+}
+
+.hero_container {
+  position: relative;
+  height: 85vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero_content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
+  color: #ffffff;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero_center {
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.hero_center h1 {
+  font-size: 4rem;
+  font-weight: 400;
+  line-height: 1.05;
+  margin: 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+@media (min-width: 768px) {
+  .hero_center h1 {
+    font-size: 5rem !important;
+    line-height: 1.1;
+  }
+}
+
+.event_meta {
+  font-size: 0.85rem;
+  text-align: center;
+  margin-top: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.hero_bottom {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  width: 100%;
+}
+
+.scroll_arrow {
+  grid-column: 2;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.hero_links {
+  grid-column: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+}
+
+.hero_links a {
+  color: #ffffff;
+  font-size: 0.85rem;
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   6. ARTIST-SEKTION & POPOVER (Elliot Vance)
+   -------------------------------------------------------------------------- */
+.artist_section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 3rem 1rem;
+  align-items: center;
+}
+
+.artist_image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.artist_content {
+  align-self: start !important;
+}
+
+.artist_content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.artist_content h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.artist_content p {
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.btn-read-more {
+  background: none;
+  border: none;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  color: inherit;
+}
+
+@media (min-width: 768px) {
+  .artist_section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .artist_section.reverse .artist_content {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .artist_section.reverse .artist_image {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+.artist-popover {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  padding: 2.5rem 2rem;
+  max-width: 500px;
+  width: 90vw;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  margin: auto;
+  position: fixed;
+  inset: 0;
+  opacity: 0;
+  transform: scale(0.95);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    display 0.3s allow-discrete,
+    overlay 0.3s allow-discrete;
+}
+
+.artist-popover:popover-open {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@starting-style {
+  .artist-popover:popover-open {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+.artist-popover h2,
+.artist-popover h3,
+.artist-popover p {
+  color: var(--color-text);
+}
+
+.artist-popover h2 {
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.artist-popover h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.artist-popover p {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.artist-popover .btn-close {
+  float: right;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: inherit;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.artist-popover::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  transition:
+    opacity 0.3s ease,
+    display 0.3s allow-discrete,
+    overlay 0.3s allow-discrete;
+}
+
+.artist-popover:popover-open::backdrop {
+  opacity: 1;
+}
+
+@starting-style {
+  .artist-popover:popover-open::backdrop {
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. EXPLORE-SEKTION PÅ STARTSIDAN (SVG + Liten Biljett)
+   -------------------------------------------------------------------------- */
+.explore-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding: 3rem 1rem;
+  box-sizing: border-box;
+  width: auto;
+}
+
+@media (min-width: 768px) {
+  .explore-section {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    align-items: start;
+    gap: 3rem;
+  }
+}
+
+.svg-ticket-box {
+  position: relative;
+  border: 1px solid transparent;
+  background-color: transparent;
+  padding: 0;
+  width: 100%;
+  height: auto;
+  min-height: 0 !important;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Vit border runt den stora SVG-boxen enbart i Dark Mode */
+html.dark .svg-ticket-box {
+  border-color: #ffffff;
+  box-shadow: 3px 3px 10px rgba(255, 255, 255, 0.15);
+}
+
+.yarn-graphic {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Stora garnbollen: Ändra svarta linjer/fyllningar till vitt i Dark Mode */
+html.dark .yarn-graphic [stroke="#000"],
+html.dark .yarn-graphic [stroke="#000000"],
+html.dark .yarn-graphic [stroke="black"] {
+  stroke: #ffffff !important;
+}
+
+html.dark .yarn-graphic [fill="#000"],
+html.dark .yarn-graphic [fill="#000000"],
+html.dark .yarn-graphic [fill="black"] {
+  fill: #ffffff !important;
+}
+
+/* --------------------------------------------------------------------------
+   LILLA BILJETTEN (Låst till vit bakgrund & svart text/ikon i alla lägen)
+   -------------------------------------------------------------------------- */
+.ticket-preview-card {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  padding: 0.8rem 1rem;
+  width: 180px;
+  font-size: 0.75rem;
+  outline: 2px solid #000000 !important;
+  outline-offset: -5px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.ticket-preview-card h4,
+.ticket-preview-card p {
+  color: #000000 !important;
+}
+
+.ticket-preview-card h4 {
+  margin: 0 0 0.3rem 0;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.ticket-preview-card p {
+  margin: 0.1rem 0;
+  font-size: 0.6rem;
+}
+
+/* Lilla garnikonen på biljetten - Alltid i original (svart) */
+.ticket-preview-icon {
+  position: absolute;
+  bottom: 0.3rem;
+  right: 1rem;
+  width: 28px;
+  height: 28px;
+}
+
+.ticket-preview-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: none !important;
+}
+
+/* Textinnehåll till höger om SVG-grafiken */
+.explore-text-content .sub-heading {
+  font-size: 1.1rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 0.8rem;
+  margin-top: 0.5rem;
+  text-transform: capitalize;
+  color: var(--color-text);
+}
+
+.explore-text-content h2 {
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: auto;
+  color: var(--color-text);
+}
+
+.explore-text-content p {
+  margin-bottom: 1rem;
+  color: var(--color-text);
+}
+
+.explore-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-black {
+  background-color: var(--color-text);
+  color: var(--color-page) !important;
+  padding: 0.7rem 1.4rem;
+  text-decoration: none;
+  font-weight: bold;
+  border: 2px solid var(--color-text);
+  transition: opacity 0.2s ease;
+}
+
+.btn-black:hover {
+  opacity: 0.85;
+}
+
+.btn-blue {
+  background-color: #0038ff;
+  color: #ffffff !important;
+  padding: 0.7rem 1.4rem;
+  text-decoration: none;
+  font-weight: bold;
+  border: 2px solid #0038ff;
+  transition: opacity 0.2s ease;
+}
+
+.btn-blue:hover {
+  opacity: 0.85;
+}
+/* --------------------------------------------------------------------------
+   8. EXPLORE THE EVENT (SVG-SIDA & ACCORDION LAYOUT)
+   -------------------------------------------------------------------------- */
+.interactive-knot {
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.svg-page {
+  margin-top: 6rem !important;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.svg-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .svg-page {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .svg-layout {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+.svg-intro h1 {
+  font-size: 1.8rem !important;
+  font-weight: bold;
+}
+
+.svg-body .site-header nav a,
+.svg-body .site-header a {
+  color: var(--color-text) !important;
+}
+
+.svg-body .site-header svg path,
+.svg-body .site-header svg line,
+.svg-body .site-header svg rect {
+  stroke: var(--color-text) !important;
+  fill: var(--color-text) !important;
+}
+
+.svg-body h3 {
+  font-size: 1rem;
+  font-weight: normal !important;
+}
+
+.svg-body p {
+  font-size: 0.8rem;
+}
+
+/* Dragspel / Accordion */
+.accordion {
+  display: grid;
+  gap: var(--space-05);
+}
+
+.accordion-item {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.accordion-item p {
+  padding: 0 var(--space-1) var(--space-1);
+  color: var(--color-muted);
+}
+
+summary {
+  font-weight: bold;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::after {
+  content: "+";
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+details[open] summary::after {
+  content: "−";
+}
+
+/* --------------------------------------------------------------------------
+   9. BILJETTGFORMULÄR (.form-body) & HOW IT WORKS
+   -------------------------------------------------------------------------- */
+.form-body {
+  background-color: var(--color-page);
+  color: var(--color-text);
+}
+
+.form-main {
+  max-width: 650px;
+  width: 100%;
+  margin: 5rem auto 4rem auto;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+}
+
+.form-header h1,
+.title-form {
+  font-size: 1.8rem !important;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+  font-size: 1rem;
+  color: var(--color-text);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.ticket-form {
+  margin-bottom: 3rem;
+}
+
+.form-group,
+.form-fieldset,
+.color-picker-group,
+fieldset {
+  margin-bottom: 1.5rem;
+  border: none;
+  padding: 0;
+}
+
+.form-group label,
+.form-fieldset legend,
+.color-picker-group legend,
+label,
+legend {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+  color: var(--color-text);
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+
+input[type="text"]::placeholder {
+  color: var(--color-muted);
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: normal;
+  margin-bottom: 0.3rem;
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+/* Swatches */
+.color-options {
+  display: flex;
+  gap: 10px;
+  margin-top: 0.5rem;
+}
+
+.color-option {
+  cursor: pointer;
+  position: relative;
+}
+
+.color-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.color-option .swatch {
+  display: block;
+  width: 32px;
+  height: 32px;
+  border-radius: 2px;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.color-option.black .swatch {
+  background-color: #000000;
+}
+.color-option.blue .swatch {
+  background-color: #0038ff;
+}
+.color-option.orange .swatch {
+  background-color: #ff5c00;
+}
+.color-option.green .swatch {
+  background-color: #b8f000;
+}
+.color-option.pink .swatch {
+  background-color: #ff007a;
+}
+
+.color-option input[type="radio"]:checked + .swatch {
+  transform: scale(1.1);
+  box-shadow:
+    0 0 0 2px var(--color-page),
+    0 0 0 4px var(--color-text);
+}
+
+button[type="submit"],
+.submit-btn {
+  background-color: var(--color-text);
+  color: var(--color-page);
+  border: 1px solid var(--color-text);
+  padding: 0.75rem 1.8rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: opacity 0.2s ease;
+}
+
+button[type="submit"]:hover,
+.submit-btn:hover {
+  opacity: 0.85;
+}
+
+/* How It Works Section */
+.how-it-works-section {
+  border-top: 1px solid var(--color-border);
+  padding-top: 1.5rem;
+}
+
+.how-it-works-accordion summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.how-it-works-accordion summary h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.steps-list {
+  margin-top: 1rem;
+  padding-left: 1.2rem;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+.steps-list li {
+  margin-bottom: 0.6rem;
+}
+
+.form-closing-text {
+  margin-top: 2rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+/* Menylänkar på formulär- & uppsamlingssidan */
+.form-body .site-header nav a,
+.opsamling-body .site-header nav a {
+  text-decoration: none !important;
+  border-bottom: 3px solid transparent;
+  padding-bottom: 2px;
+  color: var(--color-text);
+}
+
+.form-body .site-header nav a:hover,
+.opsamling-body .site-header nav a:hover {
+  border-bottom-color: var(--color-text) !important;
+}
+
+.form-body .site-nav button,
+.opsamling-body .site-nav button {
+  color: var(--color-text);
+}
+
+/* --------------------------------------------------------------------------
+   10. UPPSAMLINGSSIDA (.opsamling-body) & BILJETTKORT
+   -------------------------------------------------------------------------- */
+.opsamling-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  width: 100%;
+  margin-top: 6rem;
+}
+
+@media (min-width: 768px) {
+  .opsamling-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    align-items: start;
+  }
+}
+
+.opsamling-ticket-col,
+.opsamling-info-col {
+  width: 100%;
+}
+
+.opsamling-ticket-col .title-form {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+}
+
+.opsamling-subtitle {
+  font-size: 0.95rem;
+  color: var(--color-text);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.ticket-preview-box {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+}
+
+/* Biljettkortet: Alltid vit bakgrund oavsett tema */
+.ticket-card {
+  background-color: #ffffff !important;
+  padding: 1.8rem 1.5rem;
+  width: 100%;
+  max-width: 320px;
+  position: relative;
+  box-sizing: border-box;
+  outline: 2px solid currentColor;
+  outline-offset: -8px;
+}
+
+/* Biljettens färgvarianter (håller svarta biljetten svart på vit bakgrund) */
+.ticket-card.ticket-black {
+  border-color: #000000 !important;
+  color: #000000 !important;
+}
+.ticket-card.ticket-black .ticket-name,
+.ticket-card.ticket-black .ticket-yarn-icon,
+.ticket-card.ticket-black .ticket-details p {
+  color: #000000 !important;
+}
+
+.ticket-card.ticket-blue {
+  border-color: #0038ff;
+  color: #0038ff;
+}
+.ticket-card.ticket-blue .ticket-name,
+.ticket-card.ticket-blue .ticket-yarn-icon {
+  color: #0038ff;
+}
+
+.ticket-card.ticket-orange {
+  border-color: #ff5c00;
+  color: #ff5c00;
+}
+.ticket-card.ticket-orange .ticket-name,
+.ticket-card.ticket-orange .ticket-yarn-icon {
+  color: #ff5c00;
+}
+
+.ticket-card.ticket-green {
+  border-color: #b8f000;
+  color: #b8f000;
+}
+.ticket-card.ticket-green .ticket-name,
+.ticket-card.ticket-green .ticket-yarn-icon {
+  color: #b8f000;
+}
+
+.ticket-card.ticket-pink {
+  border-color: #ff007a;
+  color: #ff007a;
+}
+.ticket-card.ticket-pink .ticket-name,
+.ticket-card.ticket-pink .ticket-yarn-icon {
+  color: #ff007a;
+}
+
+.ticket-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  color: inherit;
+}
+
+.ticket-details p {
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+  color: inherit;
+  line-height: 1.4;
+}
+
+.ticket-yarn-icon {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 1.8rem;
+  width: 60px;
+  height: 60px;
+}
+
+.ticket-yarn-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: none !important;
+}
+
+.download-btn {
+  background-color: var(--color-text);
+  color: var(--color-page);
+  border: none;
+  padding: 0.75rem 1.8rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: inline-block;
+  width: auto;
+  transition: opacity 0.2s ease;
+}
+
+.download-btn:hover {
+  opacity: 0.85;
+}
+
+/* Info-kolumn (What's Next) */
+.opsamling-info-col h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--color-text);
+}
+
+.next-steps-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+}
+
+.next-steps-list li {
+  margin-bottom: 1.2rem;
+}
+
+.next-steps-list strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+  color: var(--color-text);
+}
+
+.next-steps-list p {
+  font-size: 0.9rem;
+  color: var(--color-text);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.closing-message {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+/* --------------------------------------------------------------------------
+   11. PANELER & FOOTER
+   -------------------------------------------------------------------------- */
+.panel,
+.svg-placeholder,
+.form-placeholder,
+.opsamling-placeholder {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  height: auto;
+  min-height: auto;
+}
+
+.panel {
+  padding: var(--space-1);
+  display: grid;
+  gap: var(--space-1);
+}
+
+.button {
+  justify-self: start;
+  display: inline-block;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-footer {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: inherit;
+  background: #000000;
+  color: #ffffff;
+}
+
+.footer-content {
+  grid-column: 2;
+  padding-block: var(--space-1);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-1);
+  color: #ffffff;
+  font-size: 0.8rem;
+}
+
+.About {
+  text-decoration: underline;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   12. SCROLL REVEAL & BILDANIMATIONER
+   -------------------------------------------------------------------------- */
+
+/* Grundläge för text och sektioner på alla sidor */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.4s ease-out,
+    transform 0.4s ease-out;
+  will-change: opacity, transform;
+}
+
+/* Synligt läge när man scrollar fram texten */
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Bilderna i artiklarna på startsidan */
+.artist_image img.scroll-reveal {
+  opacity: 0;
+  transform: scale(0.95) translateY(15px);
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.5s ease-out;
+}
+
+.artist_image img.scroll-reveal.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.artist_image img {
+  transition: transform 0.3s ease;
+}
+
+.artist_image img:hover {
+  transform: scale(1.03);
+}
+/* ==========================================================================
+   HOVER-ANIMATION FÖR SVG:N (MJUK I BÅDA RIKTNINGAR + SUBTIL INZOOMNING)
+   ========================================================================== */
+
+/* 1. Basregel för SVG:n – Sätter mjuk övergång i BÅDA riktningarna (både zoom-in och zoom-ut) */
+.svg-layout svg,
+.svg-container svg {
+  transition: transform 0.35s ease-out !important;
+  transform-origin: center center;
+}
+
+/* 2. Håller alla klickbara cirklar helt osynliga */
+.svg-layout svg circle,
+.svg-layout svg a,
+.svg-container svg circle,
+.svg-container svg a {
+  cursor: pointer;
+  pointer-events: all;
+  stroke: transparent !important;
+  fill: transparent !important;
+}
+
+/* 3. Mycket subtil inzoomning (1.5%) när man pekar på en knutzon */
+.svg-layout svg:has(circle:hover),
+.svg-layout svg:has(a:hover),
+.svg-container svg:has(circle:hover),
+.svg-container svg:has(a:hover) {
+  transform: scale(1.015) !important;
+}
